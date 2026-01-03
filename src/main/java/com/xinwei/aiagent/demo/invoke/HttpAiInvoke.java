@@ -7,9 +7,11 @@ import cn.hutool.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+// http 方式调用阿里云灵积 ai 接口
 public class HttpAiInvoke {
     public static void main(String[] args) {
         // 替换为你的实际 API 密钥
+        //String apiKey = TestApiKey.API_KEY;
         String url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation";
 
         // 设置请求头
