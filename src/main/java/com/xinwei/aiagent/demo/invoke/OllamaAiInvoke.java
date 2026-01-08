@@ -15,7 +15,7 @@ public class OllamaAiInvoke implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        AssistantMessage output = ollamaChatModel.call(new Prompt("你好，我是鱼皮"))
+        AssistantMessage output = ollamaChatModel.call(new Prompt("你好"))
                 .getResult()
                 .getOutput();
         System.out.println(output.getText());
