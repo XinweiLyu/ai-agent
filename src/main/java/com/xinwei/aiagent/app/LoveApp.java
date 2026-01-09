@@ -1,6 +1,7 @@
 package com.xinwei.aiagent.app;
 
 import com.xinwei.aiagent.advisor.MyLoggerAdvisor;
+import com.xinwei.aiagent.advisor.ReReadingAdvisor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -36,7 +37,9 @@ public class LoveApp {
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
                         // 添加自定义日志 Advisor，可按需开启
-                        new MyLoggerAdvisor()
+                        new MyLoggerAdvisor(),
+                        // 添加自定义 Re2 Advisor，可按需开启,增强推理能力
+                        new ReReadingAdvisor()
                 )
                 .build();
     }
