@@ -19,6 +19,15 @@ public class ReReadingAdvisor implements CallAroundAdvisor, StreamAroundAdvisor 
         // 把用户输入的内容放到 re2_input_query（动态变量） 参数中
         advisedUserParams.put("re2_input_query", advisedRequest.userText());
 
+        // 更新上下文, 单次请求中传递给模型的全局变量，在advisor 链中共享状态
+//        advisedRequest = advisedRequest.updateContext(context -> {
+//            context.put("key", "value");
+//            return context;
+//        });
+
+
+
+
         // 构建新的请求内容
         return AdvisedRequest.from(advisedRequest)
                 .userText("""
