@@ -22,13 +22,13 @@ public class PgVectorVectorStoreConfigTest {
     @Test
     void pgVectorVectorStore() {
         List<Document> documents = List.of(
-                new Document("变成导航有什么用？学编程，做项目", Map.of("meta1", "meta1")),
-                new Document("变成导航原创项目教程"),
-                new Document("程序员比较帅.", Map.of("meta2", "meta2")));
+                new Document("Spring AI rocks!! Spring AI rocks!! Spring AI rocks!! Spring AI rocks!! Spring AI rocks!!", Map.of("meta1", "meta1")),
+                new Document("The World is Big and Salvation Lurks Around the Corner"),
+                new Document("You walk forward facing the past and you turn back toward the future.", Map.of("meta2", "meta2")));
         // 添加文档
         pgVectorVectorStore.add(documents);
         // 相似度查询
-        List<Document> results = pgVectorVectorStore.similaritySearch(SearchRequest.builder().query("怎么学编程").topK(3).build());
+        List<Document> results = pgVectorVectorStore.similaritySearch(SearchRequest.builder().query("Spring").topK(3).build());
         Assertions.assertNotNull(results);
     }
 }
