@@ -14,6 +14,7 @@ import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -101,9 +102,11 @@ public class LoveApp {
     @Resource
     private VectorStore loveAppVectorStore;
 
-
     @Resource
     private Advisor loveAppQuestionAnswerAdvisor;
+
+    @Resource
+    private VectorStore pgVectorVectorStore;
     /**
      * Rag 知识库进行对话
      * @param message
@@ -119,9 +122,11 @@ public class LoveApp {
                 // 开启日志，便于观察效果
                 .advisors(new MyLoggerAdvisor())
                 // 1.应用 RAG 问答（基于本地知识库）
-                //.advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
+                .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
                 // 2.应用 RAG 检索增强服务（ 基于云知识库服务）
-                .advisors(loveAppQuestionAnswerAdvisor)
+                //.advisors(loveAppQuestionAnswerAdvisor)
+                // 3. 应用RAG 检索增强服务（基于PgVector云向量存储）
+                //.advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();

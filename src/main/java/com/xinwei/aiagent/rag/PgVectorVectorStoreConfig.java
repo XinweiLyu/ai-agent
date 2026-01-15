@@ -1,6 +1,7 @@
 package com.xinwei.aiagent.rag;
 
 import jakarta.annotation.Resource;
+import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
@@ -8,9 +9,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 import static org.springframework.ai.vectorstore.pgvector.PgVectorStore.PgDistanceType.COSINE_DISTANCE;
 import static org.springframework.ai.vectorstore.pgvector.PgVectorStore.PgIndexType.HNSW;
 
+
+/**
+ * PgVector云向量数据库配置（初始化基于PgVector的向量数据库bean）
+ * 向量转换模型使用DashScope Embedding Model
+ * 向量存储使用PgVector
+ */
 @Configuration
 public class PgVectorVectorStoreConfig {
 
@@ -28,6 +37,10 @@ public class PgVectorVectorStoreConfig {
                 .vectorTableName("vector_store")     // Optional: defaults to "vector_store"
                 .maxDocumentBatchSize(10000)         // Optional: defaults to 10000
                 .build();
+        // 加载文档
+        List<Document> documents = loveAppDocumentLoader.loadMarkdowns();
+        vectorStore.add(documents);
         return vectorStore;
     }
 }
+
