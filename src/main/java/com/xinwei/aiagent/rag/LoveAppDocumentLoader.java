@@ -27,7 +27,7 @@ class LoveAppDocumentLoader {
     }
 
     /**
-     * 加载多篇markdown文件
+     * 加载多篇markdown文件，自带切分文档功能
      * @return
      */
     public List<Document> loadMarkdowns() {
