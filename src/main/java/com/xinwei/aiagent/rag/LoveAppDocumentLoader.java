@@ -2,6 +2,7 @@ package com.xinwei.aiagent.rag;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.reader.JsonReader;
 import org.springframework.ai.reader.markdown.MarkdownDocumentReader;
 import org.springframework.ai.reader.markdown.config.MarkdownDocumentReaderConfig;
 import org.springframework.core.io.Resource;
@@ -50,6 +51,68 @@ class LoveAppDocumentLoader {
             }
         } catch (IOException e) {
             log.error("Markdown 文档加载失败", e);
+        }
+        return allDocuments;
+    }
+
+    /**
+     * 加载多篇JSON文件，基本用法
+     * @return
+     */
+    public List<Document> loadJsons() {
+        List<Document> allDocuments = new ArrayList<>(); // 存储所有加载的文档
+        try {
+            // 这里可以修改为你要加载的多个 JSON 文件的路径模式
+            Resource[] resources = resourcePatternResolver.getResources("classpath:document/*.json");
+            for (Resource resource : resources) {
+                // 使用 JsonReader 读取文档
+                JsonReader reader = new JsonReader(resource);
+                allDocuments.addAll(reader.get());
+            }
+        } catch (IOException e) {
+            log.error("JSON 文档加载失败", e);
+        }
+        return allDocuments;
+    }
+
+    /**
+     * 加载多篇JSON文件，指定使用哪些 JSON 字段作为文档内容
+     * @param fields 要提取的字段名称
+     * @return
+     */
+    public List<Document> loadJsonsWithFields(String... fields) {
+        List<Document> allDocuments = new ArrayList<>(); // 存储所有加载的文档
+        try {
+            // 这里可以修改为你要加载的多个 JSON 文件的路径模式
+            Resource[] resources = resourcePatternResolver.getResources("classpath:document/*.json");
+            for (Resource resource : resources) {
+                // 使用 JsonReader 读取文档,接收指定字段
+                JsonReader reader = new JsonReader(resource, fields);
+                allDocuments.addAll(reader.get());
+            }
+        } catch (IOException e) {
+            log.error("JSON 文档加载失败", e);
+        }
+        return allDocuments;
+    }
+
+    /**
+     * 加载多篇JSON文件，使用 JSON 指针精确提取文档内容
+     * @param jsonPointer JSON 指针路径，例如 "/items"
+     * @return
+     */
+    public List<Document> loadJsonsWithPointer(String jsonPointer) {
+        List<Document> allDocuments = new ArrayList<>(); // 存储所有加载的文档
+        try {
+            // 这里可以修改为你要加载的多个 JSON 文件的路径模式
+            Resource[] resources = resourcePatternResolver.getResources("classpath:document/*.json");
+            for (Resource resource : resources) {
+                // 使用 JsonReader 读取文档,接收 JSON 指针
+                JsonReader reader = new JsonReader(resource);
+                allDocuments.addAll(reader.get(jsonPointer));
+            }
+        } catch (IOException e) {
+            log.error("JSON 文档加载失败", e);
         }
         return allDocuments;
     }

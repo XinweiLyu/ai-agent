@@ -79,6 +79,8 @@
             <artifactId>spring-ai-markdown-document-reader</artifactId>
             <version>1.0.0-M6</version>
         </dependency>
+        <!-- JsonReader 已包含在 spring-ai-core 中，通过 spring-ai-alibaba-starter 或 spring-ai-ollama-spring-boot-starter 引入 -->
+
         <!-- 1. 手动整合PGVector向量数据库 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
