@@ -1,4 +1,4 @@
-package com.xinwei.aiagent.rag.pipeline;
+package com.xinwei.aiagent.rag;
 
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.factory.annotation.Qualifier;
