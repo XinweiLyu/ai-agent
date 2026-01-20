@@ -5,6 +5,7 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,6 +22,8 @@ import static org.springframework.ai.vectorstore.pgvector.PgVectorStore.PgIndexT
  * 向量存储使用PgVector
  */
 @Configuration
+// 用于在本地测试时禁用PgVector配置， 默认不启用，只有需要时才打开。
+@ConditionalOnProperty(prefix = "app.pgvector", name = "enabled", havingValue = "true")
 public class PgVectorVectorStoreConfig {
 
     @Resource

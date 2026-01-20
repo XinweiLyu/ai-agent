@@ -105,8 +105,8 @@ public class LoveApp {
     @Resource
     private Advisor loveAppQuestionAnswerAdvisor;
 
-    @Resource
-    private VectorStore pgVectorVectorStore;
+//    @Resource
+//    private VectorStore pgVectorVectorStore;
     /**
      * Rag 知识库进行对话
      * @param message

@@ -9,7 +9,8 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+// 本地rag测试时禁用PgVector配置
+@SpringBootTest(properties = "app.pgvector.enabled=false")
 class LoveAppTest {
 
     @Resource

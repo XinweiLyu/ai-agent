@@ -14,7 +14,10 @@ spring:
         dimensions: 1536 # 如果不设置，默认使用 Embedding 维度
         distance-type: COSINE_DISTANCE
         max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
-
+    # 用于在本地测试环境下禁用 pgvector
+    app:
+      pgvector:
+        enabled: false  #在需要连 PG 的环境才打开。 true 开or false 关
 server:
   port: 8123
   servlet:
