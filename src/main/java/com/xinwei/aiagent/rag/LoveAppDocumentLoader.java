@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /**
- * 恋爱大师应用的文档加载器
+ * 恋爱大师应用的文档加载器.抽取（extract）通过多种格式的文件（如Markdown、JSON、TXT、PDF、HTML等）并将其转换为Document对象列表.
  */
 @Component
 @Slf4j
@@ -203,6 +203,18 @@ class LoveAppDocumentLoader {
         } catch (IOException e) {
             log.error("Tika 文档加载失败", e);
         }
+        return allDocuments;
+    }
+
+    /**
+     * 统一加载所有格式的文档
+     */
+    public List<Document> loadAllDocuments() {
+        List<Document> allDocuments = new ArrayList<>();
+        allDocuments.addAll(loadMarkdowns());
+        allDocuments.addAll(loadJsons());
+        allDocuments.addAll(loadTexts());
+        // 根据需要添加其他格式
         return allDocuments;
     }
 }
