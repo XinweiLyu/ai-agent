@@ -1,6 +1,7 @@
 package com.xinwei.aiagent.rag;
 
 import jakarta.annotation.Resource;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -76,6 +77,33 @@ class VectorStoreQueryTest {
     }
 
     /**
+     * 测试：带阈值和元数据过滤的相似度搜索
+     */
+    @Test
+    void testSearchWithThresholdAndFilter() {
+        SearchRequest request = SearchRequest.builder()
+            .query("什么是程序员鱼皮的编程导航学习网 codefather.cn？")
+            .topK(5)
+            .similarityThreshold(0.7)
+            // 需要确保写入文档时 metadata 中包含 category/date 等键
+            .filterExpression("category == 'web' AND date > '2025-05-03'")
+            .build();
+
+        List<Document> results = loveAppVectorStore.similaritySearch(request);
+
+        System.out.println("========== 带阈值和过滤的查询 ==========");
+        System.out.println("结果数量: " + results.size());
+
+        for (int i = 0; i < results.size(); i++) {
+            Document doc = results.get(i);
+            System.out.println("【结果 " + (i + 1) + "】");
+            System.out.println("内容: " + doc.getText());
+            System.out.println("元数据: " + doc.getMetadata());
+            System.out.println();
+        }
+    }
+
+    /**
      * 测试：查看向量存储的统计信息
      */
     @Test
@@ -94,5 +122,72 @@ class VectorStoreQueryTest {
             );
             System.out.println("查询 '" + query + "': 找到 " + results.size() + " 个相关文档");
         }
+    }
+
+    /**
+     * 示例：预检索与检索相关的 API 用法（示例代码，未实际执行）
+     * 便于查阅 Spring AI RAG 相关组件使用方式。
+     */
+    @Test
+    @Disabled("示例不参与执行")
+    void preRetrievalAndRetrievalExamples() {
+        /*
+        // 1) 重写查询（Rewrite）
+        Query query1 = new Query("啥是程序员鱼皮啊啊啊啊？");
+        QueryTransformer rewriteTransformer = RewriteQueryTransformer.builder()
+                .chatClientBuilder(chatClientBuilder)
+                .build();
+        Query rewritten = rewriteTransformer.transform(query1);
+
+        // 2) 翻译查询（Translation）
+        Query query2 = new Query("hi, who is coder yupi? please answer me");
+        QueryTransformer translationTransformer = TranslationQueryTransformer.builder()
+                .chatClientBuilder(chatClientBuilder)
+                .targetLanguage("chinese")
+                .build();
+        Query translated = translationTransformer.transform(query2);
+
+        // 3) 压缩查询（Compression，结合对话历史）
+        Query query3 = Query.builder()
+                .text("编程导航有啥内容？")
+                .history(new UserMessage("谁是程序员鱼皮？"),
+                        new AssistantMessage("编程导航的创始人 codefather.cn"))
+                .build();
+        QueryTransformer compressionTransformer = CompressionQueryTransformer.builder()
+                .chatClientBuilder(chatClientBuilder)
+                .build();
+        Query compressed = compressionTransformer.transform(query3);
+
+        // 4) 多路查询扩展（Multi-query）
+        MultiQueryExpander expander = MultiQueryExpander.builder()
+                .chatClientBuilder(chatClientBuilder)
+                .numberOfQueries(3)       // 生成额外查询数
+                .includeOriginal(true)    // 是否包含原始查询
+                .build();
+        List<Query> queries = expander.expand(new Query("啥是程序员鱼皮？他会啥？"));
+
+        // 5) 基于 VectorStore 的检索
+        DocumentRetriever retriever = VectorStoreDocumentRetriever.builder()
+                .vectorStore(vectorStore)
+                .similarityThreshold(0.7)
+                .topK(5)
+                .filterExpression(new FilterExpressionBuilder()
+                        .eq("type", "web")
+                        .build())
+                .build();
+        List<Document> documents = retriever.retrieve(new Query("谁是程序员鱼皮"));
+
+        // 6) 动态 FilterExpression（从 Query 上下文读取）
+        Query queryWithContext = Query.builder()
+                .text("谁是鱼皮？")
+                .context(Map.of(VectorStoreDocumentRetriever.FILTER_EXPRESSION, "type == 'boy'"))
+                .build();
+        List<Document> documents2 = retriever.retrieve(queryWithContext);
+
+        // 7) 文档合并（拼接多个查询的结果集）
+        Map<Query, List<List<Document>>> documentsForQuery = ...; // 来自检索结果
+        DocumentJoiner joiner = new ConcatenationDocumentJoiner();
+        List<Document> joined = joiner.join(documentsForQuery);
+        */
     }
 }
