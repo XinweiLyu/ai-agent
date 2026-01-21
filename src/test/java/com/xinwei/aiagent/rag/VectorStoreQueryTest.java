@@ -133,7 +133,7 @@ class VectorStoreQueryTest {
     void preRetrievalAndRetrievalExamples() {
         /*
         // 1) 重写查询（Rewrite）
-        Query query1 = new Query("啥是程序员鱼皮啊啊啊啊？");
+        Query query1 = new Query("啥是程序员啊啊啊啊？");
         QueryTransformer rewriteTransformer = RewriteQueryTransformer.builder()
                 .chatClientBuilder(chatClientBuilder)
                 .build();
@@ -150,7 +150,7 @@ class VectorStoreQueryTest {
         // 3) 压缩查询（Compression，结合对话历史）
         Query query3 = Query.builder()
                 .text("编程导航有啥内容？")
-                .history(new UserMessage("谁是程序员鱼皮？"),
+                .history(new UserMessage("谁是程序员？"),
                         new AssistantMessage("编程导航的创始人 codefather.cn"))
                 .build();
         QueryTransformer compressionTransformer = CompressionQueryTransformer.builder()
@@ -164,7 +164,7 @@ class VectorStoreQueryTest {
                 .numberOfQueries(3)       // 生成额外查询数
                 .includeOriginal(true)    // 是否包含原始查询
                 .build();
-        List<Query> queries = expander.expand(new Query("啥是程序员鱼皮？他会啥？"));
+        List<Query> queries = expander.expand(new Query("啥是程序员？他会啥？"));
 
         // 5) 基于 VectorStore 的检索
         DocumentRetriever retriever = VectorStoreDocumentRetriever.builder()
@@ -175,11 +175,11 @@ class VectorStoreQueryTest {
                         .eq("type", "web")
                         .build())
                 .build();
-        List<Document> documents = retriever.retrieve(new Query("谁是程序员鱼皮"));
+        List<Document> documents = retriever.retrieve(new Query("谁是程序员"));
 
         // 6) 动态 FilterExpression（从 Query 上下文读取）
         Query queryWithContext = Query.builder()
-                .text("谁是鱼皮？")
+                .text("谁是程序员？")
                 .context(Map.of(VectorStoreDocumentRetriever.FILTER_EXPRESSION, "type == 'boy'"))
                 .build();
         List<Document> documents2 = retriever.retrieve(queryWithContext);
@@ -188,6 +188,87 @@ class VectorStoreQueryTest {
         Map<Query, List<List<Document>>> documentsForQuery = ...; // 来自检索结果
         DocumentJoiner joiner = new ConcatenationDocumentJoiner();
         List<Document> joined = joiner.join(documentsForQuery);
+        */
+    }
+
+    /**
+     * 示例：顾问/检索增强链路（均为演示用途，未执行）
+     */
+    @Test
+    @Disabled("示例不参与执行")
+    void advisorAndRetrievalChainExamples() {
+        /*
+        // 1) 最简单的问答顾问，自动做向量检索
+        ChatResponse response = ChatClient.builder(chatModel)
+                .build()
+                .prompt()
+                .advisors(new QuestionAnswerAdvisor(vectorStore))
+                .user("什么是编程导航？")
+                .call()
+                .chatResponse();
+
+        // 2) 配置检索阈值 / topK
+        var qaAdvisor = QuestionAnswerAdvisor.builder(vectorStore)
+                .searchRequest(SearchRequest.builder().similarityThreshold(0.8d).topK(6).build())
+                .build();
+
+        ChatClient chatClient = ChatClient.builder(chatModel)
+                .defaultAdvisors(qaAdvisor)
+                .build();
+
+        // 3) 运行时动态修改过滤表达式
+        String content = chatClient.prompt()
+                .user("看着我的眼睛，回答我！")
+                .advisors(a -> a.param(QuestionAnswerAdvisor.FILTER_EXPRESSION, "type == 'web'"))
+                .call()
+                .content();
+
+        // 4) 自定义 prompt 模板
+        QuestionAnswerAdvisor qaAdvisorWithPrompt = QuestionAnswerAdvisor.builder(vectorStore)
+                .promptTemplate(customPromptTemplate)
+                .build();
+
+        // 5) 更通用的 RetrievalAugmentationAdvisor，组合检索和可选的查询改写
+        Advisor retrievalAugmentationAdvisor = RetrievalAugmentationAdvisor.builder()
+                .documentRetriever(VectorStoreDocumentRetriever.builder()
+                        .similarityThreshold(0.50)
+                        .vectorStore(vectorStore)
+                        .build())
+                .build();
+
+        String answer = chatClient.prompt()
+                .advisors(retrievalAugmentationAdvisor)
+                .user("什么是编程导航？")
+                .call()
+                .content();
+
+        // 6) 加入 Query 改写，再做检索
+        Advisor retrievalWithRewrite = RetrievalAugmentationAdvisor.builder()
+                .queryTransformers(RewriteQueryTransformer.builder()
+                        .chatClientBuilder(chatClientBuilder.build().mutate())
+                        .build())
+                .documentRetriever(VectorStoreDocumentRetriever.builder()
+                        .similarityThreshold(0.50)
+                        .vectorStore(vectorStore)
+                        .build())
+                .build();
+
+        // 7) 用上下文增强查询（允许空上下文）
+        Advisor retrievalWithContextAugment = RetrievalAugmentationAdvisor.builder()
+                .documentRetriever(VectorStoreDocumentRetriever.builder()
+                        .similarityThreshold(0.50)
+                        .vectorStore(vectorStore)
+                        .build())
+                .queryAugmenter(ContextualQueryAugmenter.builder()
+                        .allowEmptyContext(true)
+                        .build())
+                .build();
+
+        // 8) 自定义上下文增强模板
+        QueryAugmenter queryAugmenter = ContextualQueryAugmenter.builder()
+                .promptTemplate(customPromptTemplate)
+                .emptyContextPromptTemplate(emptyContextPromptTemplate)
+                .build();
         */
     }
 }
