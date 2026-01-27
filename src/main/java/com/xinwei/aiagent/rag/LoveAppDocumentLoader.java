@@ -42,12 +42,16 @@ class LoveAppDocumentLoader {
             Resource[] resources = resourcePatternResolver.getResources("classpath:document/*.md");
             for (Resource resource : resources) {
                 String fileName = resource.getFilename();
+                // 提取文档状态信息，文件名格式为 xxx-状态.md
+                String status = fileName.substring(fileName.length() - 6, fileName.length() - 4);
                 // 配置 MarkdownDocumentReader
                 MarkdownDocumentReaderConfig config = MarkdownDocumentReaderConfig.builder()
                         .withHorizontalRuleCreateDocument(true)
                         .withIncludeCodeBlock(false)
                         .withIncludeBlockquote(false)
+                        // 添加自定义元数据
                         .withAdditionalMetadata("filename", fileName)
+                        .withAdditionalMetadata("status", status)
                         .build();
                 // 使用 MarkdownDocumentReader 读取文档,接收配置和资源
                 MarkdownDocumentReader reader = new MarkdownDocumentReader(resource, config);
