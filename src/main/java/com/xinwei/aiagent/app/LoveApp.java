@@ -133,18 +133,17 @@ public class LoveApp {
                 // 开启日志，便于观察效果
                 .advisors(new MyLoggerAdvisor())
                 // 1.应用 RAG 问答（基于本地知识库）
-                //.advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
+               .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
                 // 2.应用 RAG 检索增强服务（ 基于云知识库服务）
                 //.advisors(loveAppQuestionAnswerAdvisor)
                 // 3. 应用RAG 检索增强服务（基于PgVector云向量存储）
                 //.advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
                 // 4. 应用自定义 RAG 检索增强服务（文档查询器+上下文增强）
-                .advisors(
-                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
-                                loveAppVectorStore, "已婚"
-                        )
-                )
-
+//                .advisors(
+//                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
+//                                loveAppVectorStore, "已婚"
+//                        )
+//                )
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
