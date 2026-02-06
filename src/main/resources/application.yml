@@ -8,6 +8,12 @@ spring:
       base-url: http://localhost:11434
       chat:
         model: gemma3:1b
+
+#    dashscope:
+#      api-key: local 中
+#      chat:
+#        options:
+#          model: qwen-plus
     vectorstore:
       pgvector:
         index-type: HNSW
@@ -18,6 +24,15 @@ spring:
     app:
       pgvector:
         enabled: false  #在需要连 PG 的环境才打开。 true 开or false 关
+
+# local 中
+#    datasource:
+#      url: jdbc:
+#      username:
+#      password:
+
+
+
 server:
   port: 8123
   servlet:
@@ -43,3 +58,6 @@ logging:
   level:
     org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: debug
 
+# searchApi
+#search-api:
+#  api-key: local 中
