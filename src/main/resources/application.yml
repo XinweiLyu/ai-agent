@@ -8,8 +8,13 @@ spring:
       base-url: http://localhost:11434
       chat:
         model: gemma3:1b
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers.json
 
-#    dashscope:
+
+    #    dashscope:
 #      api-key: local 中
 #      chat:
 #        options:
@@ -61,3 +66,7 @@ logging:
 # searchApi
 #search-api:
 #  api-key: local 中
+# 修改日志级别，开启 org.springframework.ai 包下的 DEBUG 日志，以便查看与 AI 相关的调试信息
+#logging:
+#  level:
+#    org.springframework.ai: DEBUG
