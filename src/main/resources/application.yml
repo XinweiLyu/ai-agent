@@ -12,6 +12,12 @@ spring:
       client:
         stdio:
           servers-configuration: classpath:mcp-servers.json
+        # 远程mcp
+#        sse:
+#          connections:
+#            server1:
+#                url: http://remote-mcp-server.com/sse
+
 
 
     #    dashscope:
