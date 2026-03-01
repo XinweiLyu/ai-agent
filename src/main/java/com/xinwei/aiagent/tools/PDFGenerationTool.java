@@ -19,6 +19,8 @@ import java.io.IOException;
  */
 public class PDFGenerationTool {
 
+    // 直接返回PDF 给用户，工具执行结果不需要再经过AI 模型处理
+    // @Tool(description = "Generate a PDF file with given content", returnDirect = true)
     @Tool(description = "Generate a PDF file with given content")
     public String generatePDF(
             @ToolParam(description = "Name of the file to save the generated PDF") String fileName,
