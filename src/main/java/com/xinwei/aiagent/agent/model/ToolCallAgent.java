@@ -124,6 +124,15 @@ public class ToolCallAgent extends ReActAgent {
         setMessageList(toolExecutionResult.conversationHistory());
         // 当前工具调用的结果
         ToolResponseMessage toolResponseMessage = (ToolResponseMessage) CollUtil.getLast(toolExecutionResult.conversationHistory());
+
+        // 判断是否调用了终止工具
+        boolean terminateToolCalled = toolResponseMessage.getResponses().stream()
+                .anyMatch(response -> response.name().equals("doTerminate"));
+        if (terminateToolCalled) {
+            // 任务结束，更改状态
+            setState(AgentState.FINISHED);
+        }
+
         String results = toolResponseMessage.getResponses().stream()
                 .map(response -> "工具 " + response.name() + " 完成了它的任务！结果: " + response.responseData())
                 .collect(Collectors.joining("\n"));
