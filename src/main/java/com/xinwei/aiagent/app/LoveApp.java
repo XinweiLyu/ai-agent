@@ -82,6 +82,7 @@ public class LoveApp {
     }
 
     /**
+     * AI 应用接口
      * AI 基础对话（支持多轮记忆, SSE 流式传输）
      * @param message
      * @param chatId

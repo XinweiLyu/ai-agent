@@ -163,7 +163,7 @@ public abstract class BaseAgent {
             this.cleanup();
             log.warn("SSE connection timed out");
         });
-
+        // 设置完成回调，确保在连接完成时正确清理资源和更新状态
         emitter.onCompletion(() -> {
             if (this.state == AgentState.RUNNING) {
                 this.state = AgentState.FINISHED;

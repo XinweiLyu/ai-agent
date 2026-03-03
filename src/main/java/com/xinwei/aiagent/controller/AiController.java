@@ -1,5 +1,6 @@
 package com.xinwei.aiagent.controller;
 
+import com.xinwei.aiagent.agent.model.Manus;
 import com.xinwei.aiagent.app.LoveApp;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.model.ChatModel;
@@ -14,6 +15,11 @@ import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 
+/**
+ * AI 相关接口控制器，提供与 AI 应用交互的 REST API。
+ * 包含同步和流式调用 AI 恋爱大师应用的接口示例。
+ * 流式接口支持多种实现方式，满足不同前端需求。
+ */
 @RestController // 标明这是一个 REST 控制器
 @RequestMapping("/ai") // 所有接口都以 /ai 开头
 public class AiController {
@@ -87,4 +93,19 @@ public class AiController {
         // 返回
         return sseEmitter;
     }
+
+
+    /**
+     * 流式调用 Manus 超级智能体
+     *
+     * @param message
+     * @return
+     */
+    @GetMapping("/manus/chat")
+    public SseEmitter doChatWithManus(String message) {
+        Manus Manus = new Manus(allTools, dashscopeChatModel);
+        return Manus.runStream(message);
+    }
+
+
 }
