@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: ai-agent
+  ai:
+    # DashScope 配置（必需，多个组件依赖此配置）
+    dashscope:
+      api-key: sk-b43606f755c948a6b7f8db329ffd308a
+      chat:
+        options:
+          model: qwen-plus
+    
+    # 生产环境不需要 Ollama，保持注释
+    # ollama:
+    #   base-url: http://localhost:11434
+    #   chat:
+    #     model: gemma3:1b
+    
+    # MCP 客户端配置（如果需要，取消注释并配置）
+    # mcp:
+    #   client:
+    #     sse:
+    #       connections:
+    #         server1:
+    #           url: ${MCP_SERVER_URL:http://mcp-server:8127}
+    
+    # PGVector 向量存储配置（如果需要，取消注释并配置）
+    # vectorstore:
+    #   pgvector:
+    #     index-type: HNSW
+    #     dimensions: 1536
+    #     distance-type: COSINE_DISTANCE
+    #     max-document-batch-size: 10000
+    
+    # 用于控制是否启用 pgvector
+    app:
+      pgvector:
+        enabled: false
+  
+  # 数据源配置（如果需要数据库，取消注释并配置）
+  datasource:
+    url: jdbc:postgresql://rm-cn-9ky4m2ypf0002vdo.rwlb.rds.aliyuncs.com:5432/ai_agent
+    username: my_user
+    password: Lyu@2026
+
+server:
+  # 使用固定端口，与 CloudBase Run 服务配置的端口一致
+  port: 8123
+  servlet:
+    # context-path: /api
+    context-path: /   # 原来是 /api
+
+# SpringDoc OpenAPI 配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.xinwei.aiagent.controller
+
+# Knife4j 配置
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# 日志配置（生产环境使用 INFO 级别）
+logging:
+  level:
+    root: INFO
+    com.xinwei.aiagent: INFO
+    org.springframework.ai: INFO
+    # 如果需要调试，可以临时开启以下配置
+    # org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: debug
+
+# Search API 配置
+search-api:
+  api-key: L4UYY48J4Q1ZfKX6KmBtB1wj

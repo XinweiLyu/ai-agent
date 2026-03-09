@@ -4,37 +4,38 @@ spring:
   profiles:
     active: local
   ai:
-    ollama:
-      base-url: http://localhost:11434
-      chat:
-        model: gemma3:1b
-    mcp:
-      client:
-#        stdio:
-#          servers-configuration: classpath:mcp-servers.json
-        # 远程mcp
-        sse:
-          connections:
-            server1:
-              url: http://localhost:8127
-
-
-
+    # 在 local 中
     #    dashscope:
-#      api-key: local 中
-#      chat:
-#        options:
-#          model: qwen-plus
-    vectorstore:
-      pgvector:
-        index-type: HNSW
-        dimensions: 1536 # 如果不设置，默认使用 Embedding 维度
-        distance-type: COSINE_DISTANCE
-        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
-    # 用于在本地测试环境下禁用 pgvector
-    app:
-      pgvector:
-        enabled: false  #在需要连 PG 的环境才打开。 true 开or false 关
+    #      api-key: local 中
+    #      chat:
+    #        options:
+    #          model: qwen-plus
+    # ollama:
+    #   base-url: http://localhost:11434
+    #   chat:
+    #     model: gemma3:1b
+
+
+    # 临时注释便于后端部署调试
+#    mcp:
+#      client:
+##        stdio:
+##          servers-configuration: classpath:mcp-servers.json
+#        # 远程mcp
+#        sse:
+#          connections:
+#            server1:
+#              url: http://localhost:8127
+#    vectorstore:
+#      pgvector:
+#        index-type: HNSW
+#        dimensions: 1536 # 如果不设置，默认使用 Embedding 维度
+#        distance-type: COSINE_DISTANCE
+#        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+#    # 用于在本地测试环境下禁用 pgvector
+#    app:
+#      pgvector:
+#        enabled: false  #在需要连 PG 的环境才打开。 true 开or false 关
 
 # local 中
 #    datasource:

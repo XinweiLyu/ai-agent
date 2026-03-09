@@ -7,6 +7,7 @@ import com.xinwei.aiagent.rag.LoveAppRagCustomAdvisorFactory;
 import com.xinwei.aiagent.rag.QueryRewriter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
@@ -194,7 +195,8 @@ public class LoveApp {
     }
 
     // AI 调用MCP 服务
-    @Resource
+//     @Resource /
+    @Autowired(required = false) // 改为非必传，避免启动报错
     private ToolCallbackProvider toolCallbackProvider; // 将所有mcp服务相关工具整合到ToolCallbackProvider
     /**
      * 调用 MCP 服务进行对话
@@ -203,6 +205,10 @@ public class LoveApp {
      * @return
      */
     public String doChatWithMcp(String message, String chatId) {
+        if (toolCallbackProvider == null) {
+            log.warn("MCP服务未配置，无法使用MCP功能");
+            return "MCP服务未配置，请先配置MCP客户端后再使用此功能";
+        }
         ChatResponse response = chatClient
                 .prompt()
                 .user(message)
