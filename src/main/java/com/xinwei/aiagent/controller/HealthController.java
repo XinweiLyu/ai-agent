@@ -4,26 +4,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RestController
-// @RequestMapping("/health")
-// public class HealthController {
-
-//     @GetMapping
-//     public String healthCheck() {
-//         return "ok";
-//     }
-// }
 @RestController
+@RequestMapping("/health")
 public class HealthController {
 
-    @GetMapping("/health")
+    @GetMapping
     public String healthCheck() {
         return "ok";
     }
-
-    // 可选：根路径也返回 200，更保险
-    @GetMapping("/")
-    public String root() {
-        return "ok";
-    }
 }
+
+
+// @RestController
+// public class HealthController {
+
+//     @GetMapping("/health")
+//     public String healthCheck() {
+//         return "ok";
+//     }
+
+//     // 可选：根路径也返回 200，更保险
+//     @GetMapping("/")
+//     public String root() {
+//         return "ok";
+//     }
+// }

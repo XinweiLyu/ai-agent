@@ -1,5 +1,8 @@
 import request from '../utils/request'
 
+// 获取 API 基础路径
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
+
 /**
  * AI恋爱大师 SSE 聊天
  * @param {string} message - 用户消息
@@ -11,7 +14,7 @@ export function doChatWithLoveAppSse(message, chatId) {
     message: message,
     chatId: chatId
   })
-  const url = `/api/ai/love_app/chat/sse?${params.toString()}`
+  const url = `${API_BASE}/ai/love_app/chat/sse?${params.toString()}`
   return new EventSource(url)
 }
 
@@ -24,6 +27,6 @@ export function doChatWithManus(message) {
   const params = new URLSearchParams({
     message: message
   })
-  const url = `/api/ai/manus/chat?${params.toString()}`
+  const url = `${API_BASE}/ai/manus/chat?${params.toString()}`
   return new EventSource(url)
 }

@@ -46,8 +46,8 @@ server:
   # 使用固定端口，与 CloudBase Run 服务配置的端口一致
   port: 8123
   servlet:
-    # context-path: /api
-    context-path: /   # 原来是 /api
+#    context-path: /api
+     context-path: /   # 原来是 /api
 
 # SpringDoc OpenAPI 配置
 springdoc:
