@@ -29,7 +29,7 @@ class VectorStoreQueryTest {
         // 由于 SimpleVectorStore 没有直接获取所有文档的方法，我们使用相似度搜索
         List<Document> results = loveAppVectorStore.similaritySearch(
             SearchRequest.builder()
-                .query("恋爱")  // 使用文档主题相关的查询词
+                .query("预防")  // 使用文档主题相关的查询词
                 .topK(100)      // 获取前100个结果（应该能覆盖所有文档）
                 .build()
         );
@@ -109,7 +109,7 @@ class VectorStoreQueryTest {
     @Test
     void testVectorStoreStatistics() {
         // 通过多次查询不同主题来估算文档数量
-        String[] queries = {"单身", "恋爱", "已婚", "沟通", "关系"};
+        String[] queries = {"预防","治疗","康复","运动","饮食"};
         
         System.out.println("========== 向量存储统计信息 ==========");
         

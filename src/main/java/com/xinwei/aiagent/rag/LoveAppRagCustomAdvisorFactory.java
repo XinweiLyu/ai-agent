@@ -10,8 +10,8 @@ import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 
 /**
- * LoveApp RAG 自定义检索增强 Advisor 工厂类
- * 根据用户状态（单身、恋爱、已婚）创建对应的检索增强 Advisor
+ *  RAG 自定义检索增强 Advisor 工厂类
+ * 根据用户状态（预防、治疗、康复）创建对应的检索增强 Advisor
  */
 @Slf4j
 public class LoveAppRagCustomAdvisorFactory {

@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /**
- * 恋爱大师应用的文档加载器.抽取（extract）通过多种格式的文件（如Markdown、JSON、TXT、PDF、HTML等）并将其转换为Document对象列表.
+ * 应用的文档加载器.抽取（extract）通过多种格式的文件（如Markdown、JSON、TXT、PDF、HTML等）并将其转换为Document对象列表.
  */
 @Component
 @Slf4j
@@ -43,10 +43,10 @@ class LoveAppDocumentLoader {
             for (Resource resource : resources) {
                 String fileName = resource.getFilename();
                 // 提取文档状态信息，文件名格式为 xxx-状态.md
-                String status = fileName.substring(fileName.length() - 6, fileName.length() - 4);
-                // 配置 MarkdownDocumentReader
+                String status = fileName.substring(fileName.length() - 6, fileName.length() - 4); 
+                // 配置 MarkdownDocumentReader，水平规则创建文档，不包含代码块，不包含引用块，添加自定义元数据
                 MarkdownDocumentReaderConfig config = MarkdownDocumentReaderConfig.builder()
-                        .withHorizontalRuleCreateDocument(true)
+                        .withHorizontalRuleCreateDocument(true) 
                         .withIncludeCodeBlock(false)
                         .withIncludeBlockquote(false)
                         // 添加自定义元数据

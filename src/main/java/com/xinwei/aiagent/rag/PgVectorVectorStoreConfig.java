@@ -17,7 +17,7 @@ import static org.springframework.ai.vectorstore.pgvector.PgVectorStore.PgIndexT
 
 
 /**
- * PgVector云向量数据库配置（初始化基于PgVector的向量数据库bean）
+ * PgVector云向量数据库配置（初始化基于PgVector的向量数据库bean）储存在内存中，重启后丢失
  * 向量转换模型使用DashScope Embedding Model
  * 向量存储使用PgVector
  */
@@ -42,7 +42,7 @@ public class PgVectorVectorStoreConfig {
                 .build();
         // 加载文档
         List<Document> documents = loveAppDocumentLoader.loadMarkdowns();
-        vectorStore.add(documents);
+        vectorStore.add(documents); // 添加文档到向量数据库
         return vectorStore;
     }
 }

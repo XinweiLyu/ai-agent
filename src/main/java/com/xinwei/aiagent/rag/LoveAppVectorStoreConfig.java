@@ -12,7 +12,7 @@ import org.springframework.ai.embedding.EmbeddingModel;
 import java.util.List;
 
 /**
- * 本地，恋爱大师向量数据库配置（初始化基于内存的向量数据库bean）
+ * 本地，向量数据库配置（初始化基于内存的向量数据库bean）
  */
 @Configuration
 public class LoveAppVectorStoreConfig {
@@ -27,6 +27,7 @@ public class LoveAppVectorStoreConfig {
     @Resource MyKeywordEnricher myKeywordEnricher;
     @Bean
     VectorStore loveAppVectorStore(EmbeddingModel dashscopeEmbeddingModel) {
+        // 创建 SimpleVectorStore，使用 dashscopeEmbeddingModel 作为向量模型
         SimpleVectorStore simpleVectorStore = SimpleVectorStore.builder(dashscopeEmbeddingModel)
                 .build();
         // 加载文档

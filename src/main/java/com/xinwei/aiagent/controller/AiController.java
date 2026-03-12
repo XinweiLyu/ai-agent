@@ -34,7 +34,7 @@ public class AiController {
     private ChatModel dashscopeChatModel;
 
     /**
-     * 同步调用 AI 恋爱大师应用
+     * 同步调用 AI 应用
      *
      * @param message
      * @param chatId
@@ -45,7 +45,7 @@ public class AiController {
         return loveApp.doChat(message, chatId);
     }
     /**
-     * SSE 流式调用 AI 恋爱大师应用
+     * SSE 流式调用 AI 应用
      * 方法1：直接返回字符串流，前端需要自己处理流式数据
      * @param message
      * @param chatId
@@ -56,7 +56,7 @@ public class AiController {
         return loveApp.doChatByStream(message, chatId);
     }
     /**
-     * SSE 流式调用 AI 恋爱大师应用
+     * SSE 流式调用 AI 应用
      * 方法2：返回 ServerSentEvent 对象流，前端可以直接使用 EventSource 处理
      * @param message
      * @param chatId
@@ -70,7 +70,7 @@ public class AiController {
                         .build());
     }
     /**
-     * SSE 流式调用 AI 恋爱大师应用
+     * SSE 流式调用 AI 应用
      * 方法3：使用 SseEmitter，适合需要更复杂控制的场景，比如错误处理、完成事件等
      * @param message
      * @param chatId

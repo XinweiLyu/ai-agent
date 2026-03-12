@@ -18,7 +18,8 @@ class MyTokenTextSplitter {
     }
 
     public List<Document> splitCustomized(List<Document> documents) {
-        TokenTextSplitter splitter = new TokenTextSplitter(200, 100, 10, 5000, true);
+        // 自定义切分器，参数分别是 （maxTokens, chunkSize, chunkOverlap, maxChunks, withMetadata）
+        TokenTextSplitter splitter = new TokenTextSplitter(200, 100, 10, 5000, true); 
         return splitter.apply(documents);
     }
 }

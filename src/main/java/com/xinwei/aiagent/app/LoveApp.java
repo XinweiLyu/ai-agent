@@ -33,11 +33,14 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 public class LoveApp {
 
     private final ChatClient chatClient;
-
-    private static final String SYSTEM_PROMPT = "扮演深耕恋爱心理领域的专家。开场向用户表明身份，告知用户可倾诉恋爱难题。" +
-            "围绕单身、恋爱、已婚三种状态提问：单身状态询问社交圈拓展及追求心仪对象的困扰；" +
-            "恋爱状态询问沟通、习惯差异引发的矛盾；已婚状态询问家庭责任与亲属关系处理的问题。" +
-            "引导用户详述事情经过、对方反应及自身想法，以便给出专属解决方案。";
+    private static final String SYSTEM_PROMPT = "扮演专业的健康顾问。" +
+    "行为准则：" +
+    "1. 如果这是与用户的第一次对话（对话历史为空），请简短介绍你的身份：'你好，我是你的健康顾问，可以为你提供健康相关的咨询服务。'然后询问用户需要什么帮助。" +
+    "2. 如果对话历史中已有交流记录，直接回答用户的问题，不要重复介绍身份。" +
+    "3. 围绕预防、治疗、康复三种状态提供咨询：预防状态关注日常保健、运动健身、营养饮食及健康管理；" +
+    "   治疗状态关注症状分析、就医建议、用药指导及疾病管理；康复状态关注恢复计划、运动康复、心理调适及生活调整。" +
+    "4. 引导用户详述身体状况、症状表现、生活习惯及健康目标，以便给出专业的健康建议。" +
+    "重要提示：本服务仅供参考，不能替代专业医疗诊断，严重症状请及时就医。";
 
     /**
      * 初始化ChatClient
@@ -105,7 +108,7 @@ public class LoveApp {
     }
 
     /**
-     * AI 恋爱报告功能（结构化输出）
+     * AI 报告功能（结构化输出）
      * @param message
      * @param chatId
      * @return
@@ -113,7 +116,7 @@ public class LoveApp {
     public LoveReport doChatWithReport(String message, String chatId) {
         LoveReport loveReport = chatClient
                 .prompt()
-                .system(SYSTEM_PROMPT + "每次对话后都要生成恋爱结果，标题为{用户名}的恋爱报告，内容为建议列表")
+                .system(SYSTEM_PROMPT + "每次对话后都要生成健康结果，标题为{用户名}的健康报告，内容为建议列表")
                 .user(message)
                 .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
@@ -156,15 +159,19 @@ public class LoveApp {
                 // 开启日志，便于观察效果
                 .advisors(new MyLoggerAdvisor())
                 // 1.应用 RAG 问答（基于本地知识库）
+                //     ├─ 将查询转换为向量
+                //     ├─ 在向量存储中搜索相似文档（余弦相似度）
+                //     ├─ 返回 Top-K 相关文档
+                //     └─ 将文档作为上下文注入到 AI 提示词
                .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
                 // 2.应用 RAG 检索增强服务（ 基于云知识库服务）
-                //.advisors(loveAppQuestionAnswerAdvisor)
+                //.advisors(loveAppRagCloudAdvisor)
                 // 3. 应用RAG 检索增强服务（基于PgVector云向量存储）
                 //.advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
                 // 4. 应用自定义 RAG 检索增强服务（文档查询器+上下文增强）
 //                .advisors(
 //                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
-//                                loveAppVectorStore, "已婚"
+//                                loveAppVectorStore, "预防"
 //                        )
 //                )
                 .call()

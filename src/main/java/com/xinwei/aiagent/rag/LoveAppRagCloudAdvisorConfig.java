@@ -25,7 +25,7 @@ class LoveAppRagCloudAdvisorConfig {
     @Bean
     public Advisor loveAppRagCloudAdvisor() {
         DashScopeApi dashScopeApi = new DashScopeApi(dashScopeApiKey);
-        final String KNOWLEDGE_INDEX = "恋爱大师";
+        final String KNOWLEDGE_INDEX = "健康顾问"; // 知识库索引名称
         // 创建 DashScopeDocumentRetriever, 配置索引名称
         DocumentRetriever documentRetriever = new DashScopeDocumentRetriever(dashScopeApi,
                 DashScopeDocumentRetrieverOptions.builder() // 构建检索器选项

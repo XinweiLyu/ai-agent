@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 基于AI的 文档原信息增强器（为文档补充原信息）
+ * 基于AI的 文档原信息增强器（使用 AI 提取关键词，补充到文档元数据）
  */
 @Component
 class MyKeywordEnricher {
