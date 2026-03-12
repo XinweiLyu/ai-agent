@@ -2,8 +2,8 @@
   <div class="chat-page love-app">
     <div class="chat-header">
       <div class="chat-header-left">
-        <div class="chat-app-badge love">恋爱大师</div>
-        <div class="chat-app-desc">情感专属 AI · 帮你写出不油腻又有温度的回复</div>
+        <div class="chat-app-badge love">健康顾问</div>
+        <div class="chat-app-desc">健康专属 AI · 帮你科学管理预防、治疗与康复</div>
       </div>
       <div class="chat-header-right">
         <span class="chat-id-label">会话 ID</span>
@@ -21,7 +21,7 @@
           <template v-if="msg.type === 'ai'">
             <div class="avatar-wrapper">
               <div class="avatar ai">
-                <span>♥</span>
+                <span>💚</span>
               </div>
             </div>
             <div class="bubble-wrapper ai">
@@ -30,7 +30,7 @@
                   {{ msg.content }}
                 </div>
                 <div class="bubble-meta">
-                  <span class="role-label">恋爱大师</span>
+                  <span class="role-label">健康顾问</span>
                   <span class="time">{{ msg.time }}</span>
                 </div>
               </div>
@@ -59,7 +59,7 @@
         <div v-if="isLoading" class="message-row ai">
           <div class="avatar-wrapper">
             <div class="avatar ai">
-              <span>♥</span>
+              <span>💚</span>
             </div>
           </div>
           <div class="bubble-wrapper ai">
@@ -78,7 +78,7 @@
             @keyup.enter.shift.stop
             :disabled="isLoading"
             class="input-box"
-            placeholder="发一段最近的聊天记录，或者直接说你现在的情绪和困惑...（Shift+Enter 换行）"
+            placeholder="描述你的健康状况、症状或困惑，比如最近的检查结果、日常作息、饮食运动等…（Shift+Enter 换行）"
           />
           <button
             @click="sendMessage"
@@ -89,7 +89,7 @@
           </button>
         </div>
         <div class="input-hint">
-          <span>💡 小提示：尽量提供真实的聊天上下文，AI 更懂你们的相处模式。</span>
+          <span>💡 小提示：尽量详细描述你的身体状况和既往病史，AI 更能给出匹配的健康建议。本服务仅供参考，不能替代专业医疗诊断。</span>
         </div>
       </div>
     </div>
@@ -262,7 +262,7 @@ onUnmounted(() => {
 }
 
 .chat-app-badge.love {
-  background: linear-gradient(135deg, #ec4899, #fb7185);
+  background: linear-gradient(135deg, #10b981, #22c55e);
 }
 
 .chat-app-desc {
@@ -347,7 +347,7 @@ onUnmounted(() => {
 }
 
 .avatar.ai {
-  background: linear-gradient(135deg, #ec4899, #fb7185);
+  background: linear-gradient(135deg, #10b981, #22c55e);
 }
 
 .avatar.user {

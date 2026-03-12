@@ -9,14 +9,14 @@
           收进一块面板，像写代码一样高效对话。
         </h1>
         <p class="hero-subtitle">
-          恋爱咨询、复杂任务拆解、工具调用……在一个统一的极客风界面中完成，专注输入，享受输出。
+          健康咨询、复杂任务拆解、工具调用……在一个统一的极客风界面中完成，专注输入，享受输出。
         </p>
         <div class="hero-actions">
           <button class="primary-btn" @click="goToManusApp">
             立即体验超级智能体
           </button>
           <button class="ghost-btn" @click="goToLoveApp">
-            和恋爱大师聊一聊
+            和健康顾问聊一聊
           </button>
         </div>
         <div class="hero-meta">
@@ -62,19 +62,19 @@
       <div class="app-grid">
         <div class="app-card" @click="goToLoveApp">
           <div class="app-card-header">
-            <div class="app-icon love">♥</div>
+            <div class="app-icon love">💚</div>
             <div class="app-info">
-              <h3 class="app-name">AI 恋爱大师</h3>
-              <p class="app-tagline">情感场景专用 · 更懂聊天氛围</p>
+              <h3 class="app-name">AI 健康顾问</h3>
+              <p class="app-tagline">健康场景专用 · 更懂预防、治疗与康复</p>
             </div>
           </div>
           <p class="app-desc">
-            帮你分析聊天记录、回复话术、约会规划，让直男 / 直女的对话自然又不油腻。
+            帮你解读体检结果、梳理就医思路、优化生活方式，让健康管理更科学、更安心。
           </p>
           <div class="app-meta">
-            <span>💬 聊天室式会话</span>
+            <span>💬 多轮健康问答</span>
             <span>·</span>
-            <span>🧠 流式生成回复</span>
+            <span>🧠 结合个人情况给出建议</span>
           </div>
         </div>
 
@@ -375,7 +375,7 @@ const goToManusApp = () => {
 }
 
 .app-icon.love {
-  background: linear-gradient(135deg, #ec4899, #fb7185);
+  background: linear-gradient(135deg, #10b981, #22c55e);
 }
 
 .app-icon.manus {

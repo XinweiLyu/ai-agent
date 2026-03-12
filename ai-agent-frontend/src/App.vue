@@ -7,7 +7,7 @@
       </div>
       <nav class="nav-links">
         <button class="nav-link" @click="goHome">应用中心</button>
-        <button class="nav-link" @click="goLove">恋爱大师</button>
+        <button class="nav-link" @click="goLove">健康顾问</button>
         <button class="nav-link" @click="goManus">超级智能体</button>
       </nav>
     </header>
