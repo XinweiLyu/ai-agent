@@ -3,8 +3,8 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.rag.generation.augmentation.ContextualQueryAugmenter;
 
 /**
+ * 自定义错误处理逻辑，当系统无法找到相关文档时
  * 创建上下文查询增强器工厂类
- * 用于创建专门处理健康相关查询的上下文查询增强器实例
  */
 public class LoveAppContextualQueryAugmenterFactory {
     public static ContextualQueryAugmenter createInstance() {

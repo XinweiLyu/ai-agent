@@ -17,9 +17,13 @@ import static org.springframework.ai.vectorstore.pgvector.PgVectorStore.PgIndexT
 
 
 /**
+ * 3
  * PgVector云向量数据库配置（初始化基于PgVector的向量数据库bean）储存在内存中，重启后丢失
  * 向量转换模型使用DashScope Embedding Model
  * 向量存储使用PgVector
+ * 网址：https://pgvector.org/
+ * 配置在application.yml中
+ *  阿里云postgresql 官网，开通 serverless
  */
 @Configuration
 // 用于在本地测试时禁用PgVector配置， 默认不启用，只有需要时才打开。

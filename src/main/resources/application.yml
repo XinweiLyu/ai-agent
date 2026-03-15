@@ -26,6 +26,7 @@ spring:
 #          connections:
 #            server1:
 #              url: http://localhost:8127
+#    # 3 pgvector 阿里云 postgresql 云向量数据库配置
 #    vectorstore:
 #      pgvector:
 #        index-type: HNSW

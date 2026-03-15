@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * 文档写入器接口和实现
+ * 文档写入向量库
  * 提供统一的文档写入接口，支持文件写入和向量存储写入
  */
 public interface DocumentWriter extends Consumer<List<Document>> {

@@ -13,7 +13,10 @@ import org.springframework.context.annotation.Configuration;
 
 
 /**
- * 自定义基于阿里云知识库服务的RAG增强顾问
+ * 2 自定义基于阿里云知识库服务的RAG增强顾问
+ * https://bailian.console.aliyun.com/cn-beijing/?tab=app#/knowledge-base
+ * 教程
+ * https://java2ai.com/docs/1.0.0-M6.1/tutorials/retriever/#documentretriever
  */
 @Configuration
 @Slf4j
@@ -25,7 +28,7 @@ class LoveAppRagCloudAdvisorConfig {
     @Bean
     public Advisor loveAppRagCloudAdvisor() {
         DashScopeApi dashScopeApi = new DashScopeApi(dashScopeApiKey);
-        final String KNOWLEDGE_INDEX = "健康顾问"; // 知识库索引名称
+        final String KNOWLEDGE_INDEX = "健康顾问"; // 云知识库名称
         // 创建 DashScopeDocumentRetriever, 配置索引名称
         DocumentRetriever documentRetriever = new DashScopeDocumentRetriever(dashScopeApi,
                 DashScopeDocumentRetrieverOptions.builder() // 构建检索器选项

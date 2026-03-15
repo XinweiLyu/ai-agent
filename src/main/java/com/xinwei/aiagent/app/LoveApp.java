@@ -154,6 +154,7 @@ public class LoveApp {
                 .prompt()
                 //.user(message)
                 .user(rewrittenMessage) //使用改写后的
+                // 设置对话记忆 最后10条
                 .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 // 开启日志，便于观察效果

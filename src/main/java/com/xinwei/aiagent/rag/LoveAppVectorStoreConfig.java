@@ -12,7 +12,8 @@ import org.springframework.ai.embedding.EmbeddingModel;
 import java.util.List;
 
 /**
- * 本地，向量数据库配置（初始化基于内存的向量数据库bean）
+ * 1本地，向量数据库配置（初始化基于内存的向量数据库bean）
+ * 
  */
 @Configuration
 public class LoveAppVectorStoreConfig {
@@ -23,7 +24,7 @@ public class LoveAppVectorStoreConfig {
     // 引入自定义文本切分器
     @Resource
     private MyTokenTextSplitter myTokenTextSplitter;
-
+    // 引入自定义关键词增强器, 用ai补充元数据
     @Resource MyKeywordEnricher myKeywordEnricher;
     @Bean
     VectorStore loveAppVectorStore(EmbeddingModel dashscopeEmbeddingModel) {
@@ -36,7 +37,7 @@ public class LoveAppVectorStoreConfig {
         //List<Document> splitDocuments = myTokenTextSplitter.splitCustomized(documents);
         // 自动补充关键词原信息
         List<Document> enrichedDocuments = myKeywordEnricher.enrichDocuments(documents);
-        simpleVectorStore.add(enrichedDocuments);
+        simpleVectorStore.add(enrichedDocuments); // 添加文档到向量数据库, embedding 向量
         return simpleVectorStore;
     }
 }
