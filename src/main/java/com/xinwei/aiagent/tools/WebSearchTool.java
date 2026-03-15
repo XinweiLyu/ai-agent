@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * 网络搜索工具
+ * https://www.searchapi.io/
  */
 public class WebSearchTool {
 
@@ -28,17 +29,19 @@ public class WebSearchTool {
     @Tool(description = "Search for information from Baidu Search Engine")
     public String searchWeb(
             @ToolParam(description = "Search query keyword") String query) {
+        // 构建请求参数
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("q", query);
         paramMap.put("api_key", apiKey);
         paramMap.put("engine", "baidu");
         try {
+            // 发送请求，使用 HttpUtil.get 方法，参数为请求URL和请求参数
             String response = HttpUtil.get(SEARCH_API_URL, paramMap);
-            // 取出返回结果的前 5 条
+            // 解析响应结果
             JSONObject jsonObject = JSONUtil.parseObj(response);
             // 提取 organic_results 部分
             JSONArray organicResults = jsonObject.getJSONArray("organic_results");
-            List<Object> objects = organicResults.subList(0, 5);
+            List<Object> objects = organicResults.subList(0, 5); // 取出返回结果的前 5 条
             // 拼接搜索结果为字符串
             String result = objects.stream().map(obj -> {
                 JSONObject tmpJSONObject = (JSONObject) obj;

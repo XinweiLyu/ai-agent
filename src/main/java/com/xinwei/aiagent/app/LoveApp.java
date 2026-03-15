@@ -205,6 +205,7 @@ public class LoveApp {
     // AI 调用MCP 服务
 //     @Resource /
     @Autowired(required = false) // 改为非必传，避免启动报错
+    // 通过 ToolCallbackProvider 引入所有 MCP 
     private ToolCallbackProvider toolCallbackProvider; // 将所有mcp服务相关工具整合到ToolCallbackProvider
     /**
      * 调用 MCP 服务进行对话

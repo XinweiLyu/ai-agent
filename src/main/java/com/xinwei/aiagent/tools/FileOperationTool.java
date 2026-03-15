@@ -16,7 +16,7 @@ public class FileOperationTool {
     public String readFile(@ToolParam(description = "Name of the file to read") String fileName) {
         String filePath = FILE_DIR + "/" + fileName;
         try {
-            return FileUtil.readUtf8String(filePath);
+            return FileUtil.readUtf8String(filePath);// 读取文件内容
         } catch (Exception e) {
             return "Error reading file: " + e.getMessage();
         }

@@ -11,7 +11,7 @@ public class WebScrapingToolTest {
     @Test
     public void testScrapeWebPage() {
         WebScrapingTool tool = new WebScrapingTool();
-        String url = "https://www.codefather.cn";
+        String url = "https://www.mianshiya.com/exam/banks?category=ai_choice";
         String result = tool.scrapeWebPage(url);
         assertNotNull(result);
     }
