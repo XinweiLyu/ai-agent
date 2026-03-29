@@ -25,9 +25,7 @@ import static org.springframework.ai.vectorstore.pgvector.PgVectorStore.PgIndexT
  * 配置在application.yml中
  *  阿里云postgresql 官网，开通 serverless
  */
-@Configuration
-// 用于在本地测试时禁用PgVector配置， 默认不启用，只有需要时才打开。
-@ConditionalOnProperty(prefix = "app.pgvector", name = "enabled", havingValue = "true")
+@Configuration// 为方便开发调试和部署，临时注释，如果需要使用 PgVector 存储知识库，取消注释
 public class PgVectorVectorStoreConfig {
 
     @Resource

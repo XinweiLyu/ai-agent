@@ -57,10 +57,10 @@ public class ImageSearchTool {
         return JSONUtil.parseObj(response)
                 .getJSONArray("photos")
                 .stream()
-                .map(photoObj -> (JSONObject) photoObj)
-                .map(photoObj -> photoObj.getJSONObject("src"))
-                .map(photo -> photo.getStr("medium"))
-                .filter(StrUtil::isNotBlank)
-                .collect(Collectors.toList());
+                .map(photoObj -> (JSONObject) photoObj)// 转换为JSONObject
+                .map(photoObj -> photoObj.getJSONObject("src"))// 获取src对象
+                .map(photo -> photo.getStr("medium"))// 获取medium字段
+                .filter(StrUtil::isNotBlank) // 过滤空字符串
+                .collect(Collectors.toList()); // 转换为List
     }
 }

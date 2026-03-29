@@ -31,9 +31,9 @@ public class PDFGenerationTool {
             // 创建目录
             FileUtil.mkdir(fileDir);
             // 创建 PdfWriter 和 PdfDocument 对象
-            try (PdfWriter writer = new PdfWriter(filePath);
-                 PdfDocument pdf = new PdfDocument(writer);
-                 Document document = new Document(pdf)) {
+            try (PdfWriter writer = new PdfWriter(filePath); ///创建 PDF 写入器，指定输出文件路径
+                 PdfDocument pdf = new PdfDocument(writer); // ：创建 PDF 文档对象，关联写入器
+                 Document document = new Document(pdf)) { // 创建文档对象，关联 PDF 文档对象
                 // 自定义字体（需要人工下载字体文件到特定目录）
 //                String fontPath = Paths.get("src/main/resources/static/fonts/simsun.ttf")
 //                        .toAbsolutePath().toString();

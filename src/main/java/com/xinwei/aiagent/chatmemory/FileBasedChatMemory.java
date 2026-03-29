@@ -20,6 +20,7 @@ import java.util.List;
 public class FileBasedChatMemory implements ChatMemory {
 
     private final String BASE_DIR;
+    // Kryo 是一个高性能的序列化库，用于将对象序列化为字节流，或者将字节流反序列化为对象。
     private static final Kryo kryo = new Kryo();
 
     static {
@@ -71,9 +72,9 @@ public class FileBasedChatMemory implements ChatMemory {
         List<Message> messages = new ArrayList<>();
         // 读取已有会话
         if (file.exists()) {
-            // 读取文件内容
+            // 读取文件内容, 
             try (Input input = new Input(new FileInputStream(file))) {
-                // 通过 Kryo 转化为对象.把输入信息读成对象
+                // 通过 Kryo 转化为对象.用 Kryo.readObject 把文件内容反序列化成 ArrayList<Message>
                 messages = kryo.readObject(input, ArrayList.class);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -89,6 +90,7 @@ public class FileBasedChatMemory implements ChatMemory {
     private void saveConversation(String conversationId, List<Message> messages) {
         File file = getConversationFile(conversationId);
         try (Output output = new Output(new FileOutputStream(file))) {
+            //Kryo.writeObject 把 List<Message> 序列化写入文件
             kryo.writeObject(output, messages);
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,6 +103,7 @@ public class FileBasedChatMemory implements ChatMemory {
      * @return
      */
     private File getConversationFile(String conversationId) {
+        // 返回会话文件路径  {BASE_DIR}/{conversationId}.kryo
         return new File(BASE_DIR, conversationId + ".kryo");
     }
 }

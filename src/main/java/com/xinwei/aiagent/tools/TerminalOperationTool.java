@@ -14,12 +14,13 @@ public class TerminalOperationTool {
 
     @Tool(description = "Execute a command in the terminal")
     public String executeTerminalCommand(@ToolParam(description = "Command to execute in the terminal") String command) {
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new StringBuilder(); // 存储命令执行结果
         try {
-            // Windows系统使用cmd.exe，Linux/Mac系统可以改为"/bin/sh", "-c"
+            // 创建进程构建器，Windows系统使用cmd.exe，Linux/Mac系统为"/bin/sh", "-c"
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", command);
 //            Process process = Runtime.getRuntime().exec(command);
-            Process process = builder.start();
+            Process process = builder.start(); // 启动进程
+            // 读取进程输出
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {

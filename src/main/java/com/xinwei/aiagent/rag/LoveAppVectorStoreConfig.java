@@ -19,7 +19,7 @@ import java.util.List;
 public class LoveAppVectorStoreConfig {
 
     @Resource
-    private LoveAppDocumentLoader loveAppDocumentLoader;
+    private LoveAppDocumentLoader loveAppDocumentLoader; 
 
     // 引入自定义文本切分器
     @Resource
@@ -32,12 +32,12 @@ public class LoveAppVectorStoreConfig {
         SimpleVectorStore simpleVectorStore = SimpleVectorStore.builder(dashscopeEmbeddingModel)
                 .build();
         // 加载文档
-        List<Document> documents = loveAppDocumentLoader.loadMarkdowns();
+        List<Document> documents = loveAppDocumentLoader.loadMarkdowns(); //抽取
         // 自主切分
         //List<Document> splitDocuments = myTokenTextSplitter.splitCustomized(documents);
         // 自动补充关键词原信息
-        List<Document> enrichedDocuments = myKeywordEnricher.enrichDocuments(documents);
-        simpleVectorStore.add(enrichedDocuments); // 添加文档到向量数据库, embedding 向量
+        List<Document> enrichedDocuments = myKeywordEnricher.enrichDocuments(documents); //转换
+        simpleVectorStore.add(enrichedDocuments); // 加载文档到向量数据库, embedding 向量
         return simpleVectorStore;
     }
 }

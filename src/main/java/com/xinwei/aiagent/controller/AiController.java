@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * AI 相关接口控制器，提供与 AI 应用交互的 REST API。
- * 包含同步和流式调用 AI 恋爱大师应用的接口示例。
+ * 包含同步和流式调用 AI 健康顾问（LoveApp）应用的接口示例。
  * 流式接口支持多种实现方式，满足不同前端需求。
  */
 @RestController // 标明这是一个 REST 控制器

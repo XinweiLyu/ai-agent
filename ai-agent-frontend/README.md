@@ -7,7 +7,7 @@
 这是一个功能丰富的 AI Agent 前端应用，为用户提供友好的界面来与后端 AI 服务交互。主要包含三个核心页面：
 
 - **应用中心（Home）**：应用切换中心，展示所有可用的 AI 应用
-- **AI 恋爱大师（LoveApp）**：专业的恋爱咨询助手，支持实时流式对话和多轮对话记忆
+- **AI 健康顾问（LoveApp）**：健康场景咨询助手（非替代诊疗），支持实时流式对话和多轮对话记忆；前端路由仍为 `/love-app`，后端路径为 `/ai/love_app/...`
 - **AI 超级智能体（ManusApp）**：强大的 AI 助手，能够处理各种复杂任务，展示 AI 的思考和工具执行过程
 
 ### 技术栈
@@ -95,7 +95,7 @@ ai-agent-frontend/
 │   │   └── request.js         # Axios 配置和拦截器
 │   ├── views/                  # 页面组件
 │   │   ├── Home.vue           # 应用中心主页
-│   │   ├── LoveApp.vue        # AI 恋爱大师页面
+│   │   ├── LoveApp.vue        # AI 健康顾问页面
 │   │   └── ManusApp.vue       # AI 超级智能体页面
 │   ├── App.vue                 # 根组件（布局、导航、页脚）
 │   └── main.js                 # 应用入口文件
@@ -113,7 +113,7 @@ ai-agent-frontend/
 
 **chat.js**：封装了所有聊天相关的 API 调用
 
-- `doChatWithLoveAppSse()`：恋爱大师 SSE 聊天
+- `doChatWithLoveAppSse()`：健康顾问 SSE 聊天
 - `doChatWithManus()`：超级智能体 SSE 聊天
 
 #### `src/router/` - 路由配置
@@ -121,7 +121,7 @@ ai-agent-frontend/
 **index.js**：定义了三个路由
 
 - `/`：应用中心（Home）
-- `/love-app`：恋爱大师（LoveApp）
+- `/love-app`：健康顾问（LoveApp，历史路径名）
 - `/manus-app`：超级智能体（ManusApp）
 
 #### `src/utils/` - 工具函数
@@ -138,7 +138,7 @@ ai-agent-frontend/
 - 展示所有可用的 AI 应用
 - 提供快速导航入口
 
-**LoveApp.vue**：恋爱大师页面
+**LoveApp.vue**：健康顾问聊天页面
 - 聊天界面
 - SSE 流式消息接收
 - 消息历史管理
@@ -299,7 +299,7 @@ location ^~ /api/ {
 
 ### 接口列表
 
-#### 1. AI 恋爱大师 SSE 聊天
+#### 1. AI 健康顾问 SSE 聊天
 
 **接口地址**：`GET /api/ai/love_app/chat/sse`
 
@@ -313,7 +313,7 @@ location ^~ /api/ {
 import { doChatWithLoveAppSse } from '@/api/chat'
 
 const chatId = 'chat-123'
-const message = '你好，我想咨询一下恋爱问题'
+const message = '你好，我最近睡眠不足，想咨询一下怎么调整'
 
 const eventSource = doChatWithLoveAppSse(message, chatId)
 
@@ -334,7 +334,7 @@ eventSource.onerror = (error) => {
 data: 你好
 data: ，
 data: 我是
-data: 恋爱大师
+data: 健康顾问
 ...
 ```
 
@@ -400,7 +400,7 @@ eventSource.onmessage = (event) => {
 
 #### `doChatWithLoveAppSse(message, chatId)`
 
-创建恋爱大师 SSE 连接。
+创建健康顾问 SSE 连接。
 
 **参数**：
 - `message`：用户消息

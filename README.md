@@ -6,7 +6,7 @@
 
 本项目是一个功能丰富的 AI Agent 应用，主要包含两个核心应用：
 
-- **恋爱大师（LoveApp）**：专业的恋爱心理咨询助手，支持多轮对话记忆、RAG 知识库增强、工具调用等功能
+- **健康顾问（LoveApp）**：专业的健康咨询助手（预防 / 治疗 / 康复场景），支持多轮对话记忆、RAG 知识库增强、工具调用等功能；后端类名与 HTTP 路径仍为 `LoveApp`、`/ai/love_app/...`
 - **超级智能体（Manus）**：基于 ReAct 模式的自主规划智能体，能够自主选择和使用工具完成复杂任务
 
 ### 技术栈
@@ -137,7 +137,7 @@ src/main/java/com/xinwei/aiagent/
 │   ├── AiController.java           # AI 相关接口
 │   └── HealthController.java       # 健康检查接口
 ├── app/                             # 应用层
-│   └── LoveApp.java                # 恋爱大师应用
+│   └── LoveApp.java                # 健康顾问聊天应用
 ├── agent/                           # 智能体层
 │   └── model/
 │       ├── BaseAgent.java          # 基础智能体
@@ -189,7 +189,7 @@ src/main/java/com/xinwei/aiagent/
 │              │                             │
 │  ┌───────────▼────────────────────────┐  │
 │  │        Application 层              │  │
-│  │  - LoveApp (恋爱大师)              │  │
+│  │  - LoveApp (健康顾问)              │  │
 │  │  - Manus (超级智能体)              │  │
 │  └───────────┬────────────────────────┘  │
 │              │                             │
@@ -219,9 +219,9 @@ src/main/java/com/xinwei/aiagent/
 
 ## 功能特性
 
-### 1. 恋爱大师（LoveApp）
+### 1. 健康顾问（LoveApp）
 
-专业的恋爱心理咨询助手，支持多种对话模式。
+面向一般健康咨询场景的助手（非替代诊疗），支持多种对话模式。
 
 #### 核心功能
 
@@ -262,7 +262,7 @@ src/main/java/com/xinwei/aiagent/
 
 ## 核心流程和逻辑
 
-### 1. 恋爱大师 LoveApp 流程和逻辑
+### 1. 健康顾问 LoveApp 流程和逻辑
 
 #### 初始化流程
 
@@ -271,7 +271,7 @@ src/main/java/com/xinwei/aiagent/
    └─ FileBasedChatMemory: 使用 Kryo 序列化，存储到 tmp/chat-memories/
    
 2. 构建 ChatClient
-   └─ 设置系统提示词（恋爱心理专家角色）
+   └─ 设置系统提示词（健康顾问角色）
    └─ 添加默认 Advisors：
       ├─ MessageChatMemoryAdvisor（记忆管理）
       └─ MyLoggerAdvisor（日志记录）
@@ -554,7 +554,7 @@ spring:
 2. 在 `LoveAppRagCloudAdvisorConfig.java` 中设置知识库索引名称：
 
 ```java
-final String KNOWLEDGE_INDEX = "恋爱大师";  // 修改为你的索引名
+final String KNOWLEDGE_INDEX = "健康顾问";  // 与阿里云知识库索引名一致，可按实际修改
 ```
 
 3. 在 `doChatWithRag()` 中取消注释对应行
@@ -584,7 +584,7 @@ final String KNOWLEDGE_INDEX = "恋爱大师";  // 修改为你的索引名
 ```java
 .advisors(
     LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
-        loveAppVectorStore, "已婚"  // 状态过滤：单身、恋爱、已婚
+        loveAppVectorStore, "康复"  // 状态过滤：预防、治疗、康复（与文档元数据字段 status 一致）
     )
 )
 ```
@@ -594,7 +594,7 @@ final String KNOWLEDGE_INDEX = "恋爱大师";  // 修改为你的索引名
 **可配置参数**：
 - `similarityThreshold`：相似度阈值（默认 0.5）
 - `topK`：返回文档数量（默认 3）
-- `status`：用户状态过滤（单身、恋爱、已婚）
+- `status`：用户状态过滤（预防、治疗、康复）
 
 **特点**：
 - ✅ 支持元数据过滤
@@ -618,7 +618,7 @@ final String KNOWLEDGE_INDEX = "恋爱大师";  // 修改为你的索引名
 // 4.应用自定义 RAG 检索增强服务 - 取消注释启用
 //.advisors(
 //    LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
-//        loveAppVectorStore, "已婚"
+//        loveAppVectorStore, "康复"
 //    )
 //)
 ```
@@ -818,7 +818,7 @@ List<Document> enrichedDocuments = myKeywordEnricher.enrichDocuments(documents);
 - **API 文档**：`http://localhost:8123/api/swagger-ui.html`
 - **健康检查**：`GET /health`
 
-### 恋爱大师接口
+### 健康顾问接口（URL 仍为 `/ai/love_app/...`）
 
 #### 1. 同步对话
 

@@ -90,7 +90,7 @@ public abstract class BaseAgent {
             this.cleanup();  
         }  
     }
-    /**
+    /** 
      * 运行代理（流式输出）
      *
      * @param userPrompt 用户提示词
@@ -101,13 +101,17 @@ public abstract class BaseAgent {
         SseEmitter emitter = new SseEmitter(300000L); // 5分钟超时
 
         // 使用线程异步处理，避免阻塞主线程
+    // step() 每次都可能几百 ms 到几秒,多步循环会占住请求线程很久并发高时线程很容易耗尽
+    // 用了 CompletableFuture.runAsync 后：请求线程很快释放，能继续接新请求长任务在后台线程跑,前端通过 SSE 持续收到增量结果
         CompletableFuture.runAsync(() -> {
             try {
+                // 检查状态
                 if (this.state != AgentState.IDLE) {
                     emitter.send("错误：无法从状态运行代理: " + this.state);
                     emitter.complete();
                     return;
                 }
+                // 用户提示词不能为空
                 if (StrUtil.isBlank(userPrompt)) {
                     emitter.send("错误：不能使用空提示词运行代理");
                     emitter.complete();
@@ -119,6 +123,7 @@ public abstract class BaseAgent {
                 // 记录消息上下文
                 messageList.add(new UserMessage(userPrompt));
 
+    
                 try {
                     for (int i = 0; i < maxSteps && state != AgentState.FINISHED; i++) {
                         int stepNumber = i + 1;

@@ -134,7 +134,7 @@ public class LoveApp {
     private Advisor loveAppQuestionAnswerAdvisor;
 
 //    @Resource
-//    private VectorStore pgVectorVectorStore;
+    //private VectorStore pgVectorVectorStore;
 
     @Resource
     private QueryRewriter queryRewriter;
@@ -159,17 +159,17 @@ public class LoveApp {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 // 开启日志，便于观察效果
                 .advisors(new MyLoggerAdvisor())
-                // 1.应用 RAG 问答（基于本地知识库）
+                // 1.应用 RAG 问答（基于本地知识库）similaritySearch 向量相似度检索
                 //     ├─ 将查询转换为向量
                 //     ├─ 在向量存储中搜索相似文档（余弦相似度）
                 //     ├─ 返回 Top-K 相关文档
                 //     └─ 将文档作为上下文注入到 AI 提示词
                .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
-                // 2.应用 RAG 检索增强服务（ 基于云知识库服务）
+                // 2.应用 RAG 检索增强服务（ 基于云知识库服务）混合检索 70% 向量相似度检索 30% 文本检索
                 //.advisors(loveAppRagCloudAdvisor)
-                // 3. 应用RAG 检索增强服务（基于PgVector云向量存储）
+                // 3. 应用RAG 检索增强服务（基于PgVector云向量存储）向量相似度检索
                 //.advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
-                // 4. 应用自定义 RAG 检索增强服务（文档查询器+上下文增强）
+                // 4. 应用自定义 RAG 检索增强服务（文档查询器+上下文增强） 语义检索+元数据过滤
 //                .advisors(
 //                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
 //                                loveAppVectorStore, "预防"
